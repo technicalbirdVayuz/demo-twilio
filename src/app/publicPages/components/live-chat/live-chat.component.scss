@@ -1,0 +1,30 @@
+._step_verification {
+  height: 100vh;
+  background-color: #fff;
+
+  ._main_div {
+    min-height: fit-content;
+    background-color: #fafafa;
+    box-shadow: 0 35px 35px 0 rgba(0, 0, 0, 0.15);
+    padding: 3%;
+    color: black;
+  }
+
+  #local {
+    bottom: 70px;
+    right: 30px;
+  }
+
+  // img {
+  //   opacity: 0.3;
+  // }
+
+}
+
+.video {
+  width: 100%;
+}
+
+video {
+  object-fit: none;
+}

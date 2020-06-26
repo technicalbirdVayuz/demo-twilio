@@ -1,0 +1,30 @@
+$default-color: #fff;
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+
+$button-primary-color: $primary-color;
+$button-secondary-color: $secondary-color;
+
+.sass-btn {
+  color: $default-color !important;
+  background-color: $button-primary-color !important;
+  border-color: $button-primary-color !important;
+}
+
+.sass-secondary-btn {
+  color: $default-color !important;
+  background-color: $button-secondary-color !important;
+  border-color: $button-secondary-color !important;
+}
+
+.sass-secondary-df:focus,
+.sass-secondary-df:hover {
+  color: $default-color !important;
+  background-color: $button-secondary-color !important;
+  border-color: $button-secondary-color !important;
+}
+
+:root {
+  --primary-color: black;
+  --secondary-color: black;
+}
