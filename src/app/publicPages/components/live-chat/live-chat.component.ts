@@ -52,17 +52,18 @@ export class LiveChatComponent implements OnInit, OnDestroy {
       const body = {
         bookingId: this.app_id
       };
-      this.httpService.getData('/twilio/getToken', body).subscribe(res => {
-        if (res.statusCode === 200) {
-          this.room_name = res.data.roomName;
-          this.access_tokan = res.data.accessToken;
-          this.connect();
-        } else {
-          this.router.navigate(['thanks']);
-        }
-      }, (error) => {
-        alert('Please try again after sometime.');
-      });
+      this.access_tokan = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2EyZDMzM2UzNjAwZmY4ZDg4ODcwZjAyNWZkZTRkMTI5LTE2MTU0OTAzMTUiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJkb2N0b3JzcGxhemEucGJAZ21haWwuY29tIiwidmlkZW8iOnsicm9vbSI6ImNvb2xyb29tIn19LCJpYXQiOjE2MTU0OTAzMTUsImV4cCI6MTYxNTQ5MzkxNSwiaXNzIjoiU0thMmQzMzNlMzYwMGZmOGQ4ODg3MGYwMjVmZGU0ZDEyOSIsInN1YiI6IkFDNmZlZjcwMTQ2MzJiMTQ5NjMwNmI1N2ZkYTA1YjM2NTgifQ.WAC979TEWKZqrnhDAwVmlva-t6QKHFKWfoXYJBdwGMM";
+      this.connect();
+      // this.httpService.getData('/twilio/getToken', body).subscribe(res => {
+      //   // if (res.statusCode === 200) {
+      //     // this.room_name = res.data.roomName;
+          
+      //   // } else {
+      //     // this.router.navigate(['thanks']);
+      //   // }
+      // }, (error) => {
+      //   alert('Please try again after sometime.');
+      // });
     });
 
     window.addEventListener('unload', () => {
@@ -85,25 +86,33 @@ export class LiveChatComponent implements OnInit, OnDestroy {
     } else this.router.navigate(['thanks']);
   }
 
-  connect() {
+  async connect() {
     let accessToken = this.access_tokan;
-    this.twilioService.connectToRoom(accessToken, {
-      name: this.room_name,
-      audio: true,
-      video: { height: 720, frameRate: 24, width: 1280 },
-      bandwidthProfile: {
-        video: {
-          mode: 'collaboration',
-          // maxTracks: 10,
-          // dominantSpeakerPriority: 'standard',
-          renderDimensions: {
-            high: { height: 1080, width: 1980 },
-            standard: { height: 720, width: 1280 },
-            low: { height: 176, width: 144 }
+    var that = this;
+    var data = await this.twilioService.getToken("a")
+    .subscribe(function(res){
+      console.log("Inside subscribe");
+      var data = JSON.parse(res._body);
+      console.log(data.token);
+      that.twilioService.connectToRoom(data.token, {
+        name: "coolroom",
+        audio: true,
+        video: { height: 720, frameRate: 24, width: 1280 },
+        bandwidthProfile: {
+          video: {
+            mode: 'collaboration',
+            // maxTracks: 10,
+            // dominantSpeakerPriority: 'standard',
+            renderDimensions: {
+              high: { height: 1080, width: 1980 },
+              standard: { height: 720, width: 1280 },
+              low: { height: 176, width: 144 }
+            }
           }
-        }
-      },
-    })
+        },
+      })
+});
+    
   }
 
   mute() {

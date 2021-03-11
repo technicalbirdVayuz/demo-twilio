@@ -29,7 +29,8 @@ export class TwilioService {
   }
 
   getToken(username): Observable<any> {
-    return this.http.post('/abc', { uid: 'ashish' });
+    console.log('https://doctorplazaevening.herokuapp.com/api/twiliotoken?client=' + Date.now());
+    return this.http.get('https://doctorplazaevening.herokuapp.com/api/twiliotoken?client=' + Date.now());
   }
 
 
@@ -75,7 +76,7 @@ export class TwilioService {
   connectToRoom(accessToken: string, options): void {
     connect(accessToken, options).then(room => {
       this.roomObj = room;
-
+      console.log(room);
       if (!this.previewing && options['video']) {
         this.startLocalVideo();
         this.previewing = true;
